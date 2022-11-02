@@ -1,0 +1,37 @@
+server:
+  port: 8000
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway:
+      routes:
+      - id: bookservice
+        uri: http://localhost:8100
+        predicates:
+        - Path=/bookstore/books/**
+        
+      - id: userservice
+        uri: http://localhost:8200
+        predicates:
+        - Path=/bookstore/users/**
+        
+      - id: securityserver
+        uri: http://localhost:8400
+        predicates:
+        - Path=/bookstore/auth/**
+        
+      - id: libraryservice
+        uri: http://localhost:8300
+        predicates:
+        - Path=/bookstore/library/**
+        
+        
+        
+        
